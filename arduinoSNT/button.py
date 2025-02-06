@@ -1,16 +1,15 @@
+from shutil import Error
+
 import pyfirmata
 
-from .board import Board
-
-
 class Button:
-    def __init__(self, board: Board, pin: int) -> None:
+    def __init__(self, board, pin: int) -> None:
         try:
             self.pin = pin
             self.button = board.board.digital[pin]
             self.button.mode = pyfirmata.INPUT
-        except:
-            print("An error as occurred during the instantiation of the class Button.")
+        except Exception as e:
+            print(f"An error as occurred during the instantiation of the class Button:\n{e}")
             quit()
 
     def get_pin(self) -> int:

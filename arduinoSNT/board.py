@@ -1,4 +1,7 @@
 import pyfirmata
+import pyfirmata.util
+
+from button import Button
 
 class Board:
     def __init__(self, port) -> None:
@@ -6,9 +9,17 @@ class Board:
             self.port = f"COM{port}"
             self.board = pyfirmata.Arduino(self.port)
 
-        except:
-            print("An error as occurred during the instantiation of the class Board.")
+            self.iterator = pyfirmata.util.Iterator(self.board)
+
+        except Exception as e:
+            print(f"An error as occurred during the instantiation of the class Board:\n{e}")
             quit()
+
+    def start(self) -> None:
+        self.iterator.start()
 
     def get_port(self) -> str:
         return self.port
+
+    def create_button(self, pin: int) -> Button:
+        return Button(self, pin)
