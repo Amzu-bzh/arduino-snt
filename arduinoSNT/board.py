@@ -2,6 +2,7 @@ import pyfirmata
 import pyfirmata.util
 
 from button import Button
+from led import Led
 
 class Board:
     def __init__(self, port) -> None:
@@ -23,3 +24,6 @@ class Board:
 
     def create_button(self, pin: int) -> Button:
         return Button(self, pin)
+
+    def create_led(self, pin: int) -> Led:
+        return Led(self, pin)
