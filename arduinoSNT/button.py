@@ -17,3 +17,6 @@ class Button:
 
     def is_pressed(self) -> bool:
         return self.button.read()
+
+    def is_released(self) -> bool:
+        return not self.button.read()
