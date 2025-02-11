@@ -1,8 +1,8 @@
 import pyfirmata
 import pyfirmata.util
 
-from button import Button
-from led import Led
+from .button import Button
+from .led import Led
 
 class Board:
     def __init__(self, port) -> None:
