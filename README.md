@@ -5,5 +5,5 @@ Arduino SNT is a project made for tchnology curse to simplify the use of arduino
 - [X] Board management
 - [X] Button management
 - [X] Led management
-- [ ] Write project documentation (in progress)
+- [X] Write project documentation
 - [ ] Liquid crystal display screen management
