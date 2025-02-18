@@ -1,5 +1,5 @@
 # Arduino SNT
-Arduino SNT is a project made for tchnology curse to simplify the use of arduino by students using simple Python code.
+Arduino SNT is a project made for technology course to simplify the use of arduino by students using simple Python code.
 
 ## To do
 - [X] Board management
