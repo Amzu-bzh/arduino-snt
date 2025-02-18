@@ -14,7 +14,7 @@ class Board:
 
             self.iterator = pyfirmata.util.Iterator(self.board)
 
-            self.pins = {"buttons": [], "leds": []}
+            self.pins = {"buttons": {}, "leds": {}}
 
         except Exception as e:
             print(f"An error as occurred during the instantiation of the class Board:\n{e}")
@@ -24,15 +24,15 @@ class Board:
         self.iterator.start()
 
     def close(self) -> None:
-        for led in self.pins["leds"]:
+        for led in self.pins["leds"].values():
             led.turn_off()
 
     def pin_already_used(self, pin: int) -> bool:
-        for used_pin in self.pins["leds"]:
+        for used_pin in self.pins["leds"].keys():
             if used_pin == pin:
                 return True
 
-        for used_pin in self.pins["buttons"]:
+        for used_pin in self.pins["buttons"].keys():
             if used_pin == pin:
                 return True
 
@@ -46,7 +46,7 @@ class Board:
             raise PinAlreadyUsedError("Another component is already connected to this pin.")
 
         button = Button(self, pin)
-        self.pins["buttons"].append(button.get_pin())
+        self.pins["buttons"][pin] = button
         return button
 
     def create_led(self, pin: int) -> Led:
@@ -54,18 +54,18 @@ class Board:
             raise PinAlreadyUsedError("Another component is already connected to this pin.")
 
         led = Led(self, pin)
-        self.pins["leds"].append(led.get_pin())
+        self.pins["leds"][pin] = led
         return led
 
     def add_led(self, led: Led) -> None:
         if self.pin_already_used(led.get_pin()):
             raise PinAlreadyUsedError("Another component is already connected to this pin.")
 
-        self.pins["leds"].append(led.get_pin())
+        self.pins["leds"][led.get_pin()] = led
 
     def remove_led(self, led: Led) -> None:
         if self.pin_already_used(led.get_pin()):
-            self.pins["leds"].remove(led.get_pin())
+            self.pins["leds"].pop(led.get_pin())
 
         else:
             raise PinNotUsedError("No component connected to this pin.")
