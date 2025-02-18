@@ -49,6 +49,19 @@ class Board:
         self.pins["buttons"][pin] = button
         return button
 
+    def add_button(self, led: Led) -> None:
+        if self.pin_already_used(led.get_pin()):
+            raise PinAlreadyUsedError("Another component is already connected to this pin.")
+
+        self.pins["buttons"][led.get_pin()] = led
+
+    def remove_button(self, led: Led) -> None:
+        if self.pin_already_used(led.get_pin()):
+            self.pins["buttons"].pop(led.get_pin())
+
+        else:
+            raise PinNotUsedError("No component connected to this pin.")
+
     def create_led(self, pin: int) -> Led:
         if self.pin_already_used(pin):
             raise PinAlreadyUsedError("Another component is already connected to this pin.")
